@@ -85,3 +85,66 @@ Example:-
 #### Description
 
 This endpoint registers a new user by taking the user's full name, email, and password. The password is hashed before saving, and a JWT token is generated upon successful registration.
+
+### POST /user/login
+
+Logs in an existing user.
+
+#### Request
+
+- **URL**: `/user/login`
+- **Method**: `POST`
+- **Headers**:
+  - `Content-Type: application/json`
+- **Body**:
+
+```json
+{
+  "email": "string",       // User's email as a string
+  "password": "string"     // User's password as a string
+}
+```
+
+Example:
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+```
+
+#### Response
+
+- **200 OK**:
+  - **Body**:
+    ```json
+    {
+      "token": "jwt_token",
+      "user": {
+        // ...user details...
+      }
+    }
+    ```
+- **400 Bad Request**:
+  - **Body**:
+    ```json
+    {
+      "errors": [
+        // ...validation errors...
+      ]
+    }
+    ```
+- **401 Unauthorized**:
+  - **Body**:
+    ```json
+    {
+      "message": "invalid email or password"
+    }
+    ```
+- **500 Internal Server Error**:
+  - **Body**:
+    ```json
+    {
+      "message": "Internal Server Error"
+    }
+    ```
