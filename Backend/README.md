@@ -148,3 +148,59 @@ Example:
       "message": "Internal Server Error"
     }
     ```
+
+### GET /user/profile
+
+Retrieves the authenticated user's profile.
+
+#### Request
+
+- **URL**: `/user/profile`
+- **Method**: `GET`
+- **Headers**: 
+  - `Authorization: Bearer <jwt_token>` or use cookie with key `token`
+
+#### Response
+
+- **200 OK**:
+  - **Body**:
+    ```json
+    {
+      // ...user details...
+    }
+    ```
+- **401 Unauthorized**:
+  - **Body**:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+### GET /user/logout
+
+Logs out the authenticated user by clearing the token.
+
+#### Request
+
+- **URL**: `/user/logout`
+- **Method**: `GET`
+- **Headers**: 
+  - `Authorization: Bearer <jwt_token>` or use cookie with key `token`
+
+#### Response
+
+- **200 OK**:
+  - **Body**:
+    ```json
+    {
+      "message": "Logged out"
+    }
+    ```
+- **401 Unauthorized**:
+  - **Body**:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
