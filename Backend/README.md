@@ -263,3 +263,49 @@ Registers a new captain.
       "message": "Internal Server Error"
     }
     ```
+
+### GET /captain/profile
+
+Retrieves the authenticated captain's profile.
+
+- **URL**: `/captain/profile`
+- **Method**: `GET`
+- **Headers**:
+  - `Authorization: Bearer <jwt_token>` or cookie with key `token`
+- **Response**:
+  - **200 OK**:
+    ```json
+    {
+      "captain": {
+        // ...captain details...
+      }
+    }
+    ```
+  - **401 Unauthorized**:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+### GET /captain/logout
+
+Logs out the authenticated captain by invalidating the current JWT token and clearing the cookie.
+
+- **URL**: `/captain/logout`
+- **Method**: `GET`
+- **Headers**:
+  - `Authorization: Bearer <jwt_token>` or cookie with key `token`
+- **Response**:
+  - **200 OK**:
+    ```json
+    {
+      "message": "Logout successfully"
+    }
+    ```
+  - **401 Unauthorized**:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
