@@ -27,7 +27,7 @@ Registers a new user.
   }
 }
 ```
-Example:-
+Example:- 
   ```json
   {
     "fullname": {
@@ -202,5 +202,64 @@ Logs out the authenticated user by clearing the token.
     ```json
     {
       "message": "Unauthorized"
+    }
+    ```
+
+## Captain Routes
+
+### POST /captain/register
+
+Registers a new captain.
+
+#### Request
+
+- **URL**: `/captain/register`
+- **Method**: `POST`
+- **Headers**: 
+  - `Content-Type: application/json`
+- **Body**:
+```json
+{
+	"email": "string",                // Valid email address
+	"password": "string",             // Minimum 6 characters
+	"fullname": {
+		"firstname": "string",        // Minimum 3 characters
+		"lastname": "string"           // Optional or required based on service logic
+	},
+	"vehicle": {
+		"capacity": number,           // Integer, at least 1
+		"vehicleType": "string",      // One of: 'car', 'bike', 'auto'
+		"color": "string",            // Vehicle color (required)
+		"plate": "string"             // Vehicle plate number (required)
+	}
+}
+```
+
+#### Response
+
+- **201 Created**:
+  - **Body**:
+    ```json
+    {
+      "token": "jwt_token",
+      "captain": {
+        // ...captain details...
+      }
+    }
+    ```
+- **400 Bad Request**:
+  - **Body**:
+    ```json
+    {
+      "errors": [
+        // ...validation errors...
+      ]
+    }
+    ```
+- **500 Internal Server Error**:
+  - **Body**:
+    ```json
+    {
+      "message": "Internal Server Error"
     }
     ```
