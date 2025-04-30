@@ -1,7 +1,8 @@
 import React from 'react'
-import { Links } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import { useState, } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useState, useContext } from 'react'
+import axios from 'axios'
+import { UserDataContext } from '../context/UserContext'
 
 const UserSignup = () => {
 
@@ -9,21 +10,33 @@ const UserSignup = () => {
   const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [userData, setUserData] = useState({})
 
+
+  const navigate = useNavigate()
+
+  const {user, setUser } = useContext(UserDataContext)
+  
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    setUserData({
-      fullName:{
-        firstName: firstName,
-        lastName: lastName
+    const newUser = {
+      fullname: {
+        firstname: firstName,
+        lastname: lastName
       },
       email: email,
       password: password
-    })
+    }
 
-    console.log(userData)
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser)
+
+    if (response.status === 201) {
+      const data = response.data;
+
+      setUser(data.user)
+      localStorage.setItem('token', data.token)
+      navigate('/home')
+    }
 
     setEmail('')
     setFirstName('')
@@ -46,12 +59,12 @@ const UserSignup = () => {
               required
               className='bg-[#efefef] mb-7 rounded-xl px-4 py-2 w-1/2 text-base placeholder:text-base'
               type="name"
-              placeholder='First Name' 
+              placeholder='First Name'
               value={firstName}
-              onChange={(e)=>{
+              onChange={(e) => {
                 setFirstName(e.target.value)
               }}
-              />
+            />
 
             <input
               required
@@ -59,10 +72,10 @@ const UserSignup = () => {
               type="name"
               placeholder='Last Name'
               value={lastName}
-              onChange={(e)=>{
+              onChange={(e) => {
                 setLastName(e.target.value)
               }}
-              />
+            />
 
           </div>
 
@@ -71,27 +84,27 @@ const UserSignup = () => {
             required
             className='bg-[#efefef] mb-7 rounded-xl px-4 py-2  w-full text-base placeholder:text-base'
             type="email"
-            placeholder='email@exapmle.com' 
+            placeholder='email@exapmle.com'
             value={email}
-              onChange={(e)=>{
-                setEmail(e.target.value)
-              }}
-            />
+            onChange={(e) => {
+              setEmail(e.target.value)
+            }}
+          />
 
           <h3 className='text-base font-medium  mb-2'>Enter Password</h3>
           <input
             required
             className='bg-[#efefef] mb-7 rounded-xl px-4 py-2  w-full text-base placeholder:text-base'
             type="password"
-            placeholder='password' 
+            placeholder='password'
             value={password}
-              onChange={(e)=>{
-                setPassword(e.target.value)
-              }}
-            />
+            onChange={(e) => {
+              setPassword(e.target.value)
+            }}
+          />
 
           <button className='bg-black text-white mb-7 font-semibold rounded-xl px-4 py-2 border w-full text-lg '>
-            Sign up
+            Create Account
           </button>
 
         </form>
@@ -100,7 +113,7 @@ const UserSignup = () => {
 
       <div>
         <p className='text-[10px] leading-tight text-gray-500'>
-        This site is protected by reCAPATCHA and the <span className='underline'>Google Privacy Policy</span> and <span className='underline'>Terms of Service apply</span>
+          This site is protected by reCAPATCHA and the <span className='underline'>Google Privacy Policy</span> and <span className='underline'>Terms of Service apply</span>
         </p>
       </div>
 
