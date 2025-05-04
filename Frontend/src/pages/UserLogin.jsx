@@ -11,7 +11,7 @@ const UserLogin = () => {
   const [password, setPassword] = useState('')
   
   const navigate = useNavigate()
-  const {user, setUser} = useContext(UserDataContext)
+  const { setUser} = useContext(UserDataContext)
 
   const submitHandler = async (e)=>{
     e.preventDefault();
