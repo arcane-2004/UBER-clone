@@ -9,7 +9,7 @@ const WaitingForDriver = (props) => {
 
       <div className='flex relative items-center justify-between my-6'>
         <div className='flex'>
-          <img className='rounded-full h-15 w-17 absolute z-1 top-0' src="https://img.freepik.com/free-photo/smiling-businessman-face-portrait-wearing-suit_53876-148138.jpg" alt="" />
+          <img className='rounded-full h-15 w-15 object-cover absolute z-1 top-0' src="https://img.freepik.com/free-photo/smiling-businessman-face-portrait-wearing-suit_53876-148138.jpg" alt="" />
 
           <img className='h-15 absolute top-0 left-10 ' src="https://pngimg.com/d/suzuki_PNG12294.png" alt="" />
         </div>
@@ -21,37 +21,37 @@ const WaitingForDriver = (props) => {
         </div>
       </div>
 
-      <div className='flex flex-col gap-2 justify-between items-center'>
-        <div className='w-full p-3'>
-          {/* current location */}
-          <div className='flex items-center gap-5 p-3 border-b-2 border-gray-200'>
-            <i className="text-2xl ri-map-pin-range-line"></i>
-            <div>
-              <h3 className='text-lg font-semibold'>TTS Type/1-230</h3>
-              <p className='texl-sm text-gray-500'>Vindhyanagar, Singrauli (M.P.)</p>
-            </div>
-          </div>
 
-          {/* destination */}
-          <div className='flex items-center gap-5 p-3 border-b-2 border-gray-200'>
-            <i className="text-2xl ri-map-pin-range-fill"></i>
-            <div>
-              <h3 className='text-lg font-semibold'>Bargawan railway station</h3>
-              <p className='texl-sm text-gray-500'>Bargawan, Madhya Pradesh</p>
-            </div>
+      <div className='w-full p-3 '>
+        {/* current location */}
+        <div className='flex items-center gap-5 p-3 border-b-2 border-gray-200'>
+          <i className="text-2xl ri-map-pin-range-line"></i>
+          <div>
+            <h3 className='text-lg font-semibold'>TTS Type/1-230</h3>
+            <p className='texl-sm text-gray-500'>Vindhyanagar, Singrauli (M.P.)</p>
           </div>
-
-          {/* payment */}
-          <div className='flex items-center gap-5 p-2'>
-            <i className="text-2xl ri-currency-line"></i>
-            <div>
-              <h3 className='text-lg font-bold'>199.20</h3>
-              <p className='texl-sm text-gray-500'>Cash Cash</p>
-            </div>
-          </div>
-
         </div>
+
+        {/* destination */}
+        <div className='flex items-center gap-5 p-3 border-b-2 border-gray-200'>
+          <i className="text-2xl ri-map-pin-range-fill"></i>
+          <div>
+            <h3 className='text-lg font-semibold'>Bargawan railway station</h3>
+            <p className='texl-sm text-gray-500'>Bargawan, Madhya Pradesh</p>
+          </div>
+        </div>
+
+        {/* payment */}
+        <div className='flex items-center gap-5 p-2'>
+          <i className="text-2xl ri-currency-line"></i>
+          <div>
+            <h3 className='text-lg font-bold'>199.20</h3>
+            <p className='texl-sm text-gray-500'>Cash Cash</p>
+          </div>
+        </div>
+
       </div>
+
     </div>
   )
 }

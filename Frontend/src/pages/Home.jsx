@@ -19,7 +19,7 @@ const Home = () => {
   const [vehiclePanel, setVehiclePanel] = useState(false)
   const [confirmRidePanel, setConfirmRidePanel] = useState(false)
   const [vehicleFound, setVehicleFound] = useState(false)
-  const [waitingForDriver, setWaitingForDriver] = useState(true)
+  const [waitingForDriver, setWaitingForDriver] = useState(false)
 
   const panelRef = useRef(null)
   const panelCloseRef = useRef(null)
@@ -194,7 +194,7 @@ const Home = () => {
       </div>
 
       {/* waiting for a driver */}
-      <div ref={waitingForDriverRef} className="w-full fixed z-10 bottom-0 px-4 pb-6 bg-white ">
+      <div ref={waitingForDriverRef} className="w-full fixed z-10 bottom-0 translate-y-full px-4 pb-6 bg-white ">
         <WaitingForDriver setWaitingForDriver={setWaitingForDriver} />
       </div>
     </div>
