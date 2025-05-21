@@ -10,14 +10,14 @@ const LookingForDriver = (props) => {
       <h3 className="text-2xl font-semibold mb-3 ml-3">Looking for a driver</h3>
 
       <div className='flex flex-col gap-2 justify-between items-center'>
-        <img className='h-40' src="https://www.pngplay.com/wp-content/uploads/8/Uber-PNG-Photos.png" alt="" />
+        <img className='h-40' src={props.vehicleImg} alt="" />
         <div className='w-full p-3'>
           {/* current location */}
           <div className='flex items-center gap-5 p-3 border-b-2 border-gray-200'>
             <i className="text-2xl ri-map-pin-range-line"></i>
             <div>
-              <h3 className='text-lg font-semibold'>TTS Type/1-230</h3>
-              <p className='texl-sm text-gray-500'>Vindhyanagar, Singrauli (M.P.)</p>
+              <h3 className='text-lg font-semibold'>{props.pickup.split(" ").slice(0, 3).join(" ")}</h3>
+              <p className='texl-sm text-gray-500'>{props.pickup.split(" ").slice(3, ).join(" ")}</p>
             </div>
           </div>
 
@@ -25,8 +25,8 @@ const LookingForDriver = (props) => {
           <div className='flex items-center gap-5 p-3 border-b-2 border-gray-200'>
             <i className="text-2xl ri-map-pin-range-fill"></i>
             <div>
-              <h3 className='text-lg font-semibold'>Bargawan railway station</h3>
-              <p className='texl-sm text-gray-500'>Bargawan, Madhya Pradesh</p>
+              <h3 className='text-lg font-semibold'>{props.destination.split(" ").slice(0, 3).join(" ")}</h3>
+              <p className='texl-sm text-gray-500'>{props.destination.split(" ").slice(3,).join(" ")}</p>
             </div>
           </div>
 
@@ -34,7 +34,7 @@ const LookingForDriver = (props) => {
           <div className='flex items-center gap-5 p-2'>
             <i className="text-2xl ri-currency-line"></i>
             <div>
-              <h3 className='text-lg font-bold'>199.20</h3>
+              <h3 className='text-lg font-bold'>{props.fare[props.vehicleType]}</h3>
               <p className='texl-sm text-gray-500'>Cash Cash</p>
             </div>
           </div>

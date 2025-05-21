@@ -1,18 +1,28 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
+import {  useContext } from 'react'
+import { SocketContext } from '../context/SocketContext'
+import { useNavigate } from 'react-router-dom'
+import LiveTracking from '../components/LiveTracking'
 
 const Riding = () => {
+
+    const location = useLocation()
+    const {ride} = location.state || {}
+    const {socket} = useContext(SocketContext)
+    const navigate = useNavigate()
+
+    socket.on('ride-ended', ()=>{
+        navigate('/home')
+    })
+
     return (
         <div className='h-screen'>
             <Link to='/home' className='fixed h-10 w-10 bg-white flex items-center justify-center rounded-full right-2 top-2 '>
                 <i className="text-lg font-medium ri-home-5-line"></i>
             </Link>
             <div className="h-1/2">
-                <img
-                    className="h-full w-full object-cover"
-                    src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif"
-                    alt=""
-                />
+                <LiveTracking/>
             </div>
             <div className='h-1/2 p-4'>
                 <div className='flex relative items-center justify-between my-6'>
@@ -23,8 +33,8 @@ const Riding = () => {
                     </div>
 
                     <div className='text-right' >
-                        <h4 className='text-lg font-medium'>Ayush</h4>
-                        <h3 className='text-xl font-semibold -mt-1 -mb-1'>MP 66 T 3412</h3>
+                        <h4 className='text-lg font-medium'>{ride?.captain.fullname.firstname+ " "+ ride?.captain.fullname.lastname} </h4>
+                        <h3 className=' font-semibold -mt-1 -mb-1'>{ride?.captain.vehicle.plate} </h3>
                         <p className='text-sm text-gray-500'>White Suzuki Swift</p>
                     </div>
                 </div>
@@ -36,8 +46,8 @@ const Riding = () => {
                     <div className='flex items-center gap-5 p-3 border-b-2 border-gray-200'>
                         <i className="text-2xl ri-map-pin-range-fill"></i>
                         <div>
-                            <h3 className='text-lg font-semibold'>Bargawan railway station</h3>
-                            <p className='texl-sm text-gray-500'>Bargawan, Madhya Pradesh</p>
+                            <h3 className='text-lg font-semibold'>{ride?.destination.split(" ").slice(0, 3).join(" ")}</h3>
+                            <p className='texl-sm text-gray-500'>{ride?.destination.split(" ").slice(3, ).join(" ")} </p>
                         </div>
                     </div>
 
@@ -45,7 +55,7 @@ const Riding = () => {
                     <div className='flex items-center gap-5 p-2'>
                         <i className="text-2xl ri-currency-line"></i>
                         <div>
-                            <h3 className='text-lg font-bold'>199.20</h3>
+                            <h3 className='text-lg font-bold'>{ride?.fare} </h3>
                             <p className='texl-sm text-gray-500'>Cash Cash</p>
                         </div>
                     </div>

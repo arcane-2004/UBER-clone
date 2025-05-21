@@ -11,9 +11,9 @@ const RidePopUp = (props) => {
             <div className='flex items-center justify-between mt-4 bg-[#f7d519] p-4 rounded-lg'>
                 <div className='flex items-center gap-3'>
                     <img className="h-13 w-15 object-cover rounded-full" src="https://t3.ftcdn.net/jpg/00/00/74/52/360_F_745296_A6pUw6thznbthVnbPLm5Fgzn5FBzn5.jpg" alt="" />
-                    <h2 className='text-lg font-medium'>Arun Jain</h2>
+                    <h2 className='text-base font-medium'>{props.ride?.user.fullname.firstname +" "+ props.ride?.user.fullname.lastname} </h2>
                 </div>
-                <h2 className='text-lg font-semibold'>2.8 KM</h2>
+                <h2 className='text-base font-semibold'>2.8 KM</h2>
             </div>
             <div className='flex flex-col gap-2 justify-between items-center'>
                 <div className='w-full p-3'>
@@ -21,8 +21,8 @@ const RidePopUp = (props) => {
                     <div className='flex items-center gap-5 p-3 border-b-2 border-gray-200'>
                         <i className="text-2xl ri-map-pin-range-line"></i>
                         <div>
-                            <h3 className='text-lg font-semibold'>TTS Type/1-230</h3>
-                            <p className='texl-sm text-gray-500'>Vindhyanagar, Singrauli (M.P.)</p>
+                            <h3 className=' font-semibold'>{props.ride?.pickup.split(" ").slice(0, 3).join(" ")}</h3>
+                            <p className='texl-sm text-gray-500'>{props.ride?.pickup.split(" ").slice(3, ).join(" ")}</p>
                         </div>
                     </div>
 
@@ -30,8 +30,8 @@ const RidePopUp = (props) => {
                     <div className='flex items-center gap-5 p-3 border-b-2 border-gray-200'>
                         <i className="text-2xl ri-map-pin-range-fill"></i>
                         <div>
-                            <h3 className='text-lg font-semibold'>Bargawan railway station</h3>
-                            <p className='texl-sm text-gray-500'>Bargawan, Madhya Pradesh</p>
+                            <h3 className='font-semibold'>{props.ride?.destination.split(" ").slice(0, 3).join(" ")}</h3>
+                            <p className='texl-sm text-gray-500'>{props.ride?.destination.split(" ").slice(3, ).join(" ")}</p>
                         </div>
                     </div>
 
@@ -39,7 +39,7 @@ const RidePopUp = (props) => {
                     <div className='flex items-center gap-5 p-2'>
                         <i className="text-2xl ri-currency-line"></i>
                         <div>
-                            <h3 className='text-lg font-bold'>199.20</h3>
+                            <h3 className=' font-bold'>₹{props.ride?.fare}</h3>
                             <p className='texl-sm text-gray-500'>Cash Cash</p>
                         </div>
                     </div>
@@ -48,6 +48,7 @@ const RidePopUp = (props) => {
                 <div className='flex w-full gap-4'>
                     <button onClick={() => {
                         props.setConfirmRidePopupPanel(true)
+                        props.confirmRide()
                     }} className='w-full bg-[#f7d519]  p-2 rounded-lg font-semibold '>Accept</button>
 
                     <button onClick={() => {

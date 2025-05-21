@@ -1,7 +1,27 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+// import { endRide } from '../../../Backend/services/ride.service'
+import axios from 'axios'
 
 const FinishRide = (props) => {
+
+    const navigate = useNavigate()
+
+    async function endRide() {
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/end-ride`, {
+
+            rideId: props.ride._id
+
+        }, {
+            headers: {  
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        if (response.status === 200) {
+            navigate('/captain-home')
+        }
+    }
+
     return (
         <div >
             <h5 onClick={() => {
@@ -12,7 +32,7 @@ const FinishRide = (props) => {
             <div className='flex items-center justify-between mt-4 bg-[#f7d519] p-4 rounded-lg'>
                 <div className='flex items-center gap-3'>
                     <img className="h-13 w-15 object-cover rounded-full" src="https://t3.ftcdn.net/jpg/00/00/74/52/360_F_745296_A6pUw6thznbthVnbPLm5Fgzn5FBzn5.jpg" alt="" />
-                    <h2 className='text-lg font-medium'>Arun Jain</h2>
+                    <h2 className='text-lg font-medium'>{props.ride?.user.fullname.firstname + " " + props.ride?.user.fullname.lastname} </h2>
                 </div>
                 <h2 className='text-lg font-semibold'>2.8 KM</h2>
             </div>
@@ -22,8 +42,8 @@ const FinishRide = (props) => {
                     <div className='flex items-center gap-5 p-3 border-b-2 border-gray-200'>
                         <i className="text-2xl ri-map-pin-range-line"></i>
                         <div>
-                            <h3 className='text-lg font-semibold'>TTS Type/1-230</h3>
-                            <p className='texl-sm text-gray-500'>Vindhyanagar, Singrauli (M.P.)</p>
+                            <h3 className='text-lg font-semibold'>{props.ride?.pickup.split(" ").slice(0, 3).join(" ")}</h3>
+                            <p className='texl-sm text-gray-500'>{props.ride?.pickup.split(" ").slice(3,).join(" ")}</p>
                         </div>
                     </div>
 
@@ -31,8 +51,8 @@ const FinishRide = (props) => {
                     <div className='flex items-center gap-5 p-3 border-b-2 border-gray-200'>
                         <i className="text-2xl ri-map-pin-range-fill"></i>
                         <div>
-                            <h3 className='text-lg font-semibold'>Bargawan railway station</h3>
-                            <p className='texl-sm text-gray-500'>Bargawan, Madhya Pradesh</p>
+                            <h3 className='text-lg font-semibold'>{props.ride?.destination.split(" ").slice(0, 3).join(" ")}</h3>
+                            <p className='texl-sm text-gray-500'>{props.ride?.destination.split(" ").slice(3,).join(" ")}</p>
                         </div>
                     </div>
 
@@ -40,21 +60,22 @@ const FinishRide = (props) => {
                     <div className='flex items-center gap-5 p-2'>
                         <i className="text-2xl ri-currency-line"></i>
                         <div>
-                            <h3 className='text-lg font-bold'>199.20</h3>
+                            <h3 className='text-lg font-bold'>{props.ride?.fare} </h3>
                             <p className='texl-sm text-gray-500'>Cash Cash</p>
                         </div>
                     </div>
 
                 </div>
-                <div className='mt-6 w-full'>
+                <div className=' w-full'>
 
-                    <Link to={'/captain-home'} className='w-full bg-[#f7d519] p-2 rounded-lg font-bold text-lg flex justify-center items-center'>Finish Ride</Link>
+                    <button onClick={endRide}
+                        className='w-full bg-[#f7d519] p-2 rounded-lg font-bold text-lg flex justify-center items-center'>Finish Ride</button>
 
 
                 </div>
             </div>
         </div>
     )
-} 
+}
 
 export default FinishRide
