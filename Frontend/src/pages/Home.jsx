@@ -75,8 +75,8 @@ const Home = () => {
       })
       console.log(response.data);
       setPickupSuggestions(response.data)
-    } catch {
-      
+    } catch(err) {
+      console.error("Error fetching suggestions:", err);
     }
   }
 
