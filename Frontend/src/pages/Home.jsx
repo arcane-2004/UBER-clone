@@ -72,11 +72,11 @@ const Home = () => {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
-
+        consol.log(response.data);
       })
       setPickupSuggestions(response.data)
     } catch {
-      // handle error
+      
     }
   }
 
