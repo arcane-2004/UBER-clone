@@ -195,7 +195,8 @@ const Home = () => {
       setVehiclePanel(true)
       setPanelOpen(false)
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`, {
-        params: { pickup, destination },
+        params: { pickup : pickupId,
+          destination : destinationId },
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
