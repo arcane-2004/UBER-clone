@@ -20,7 +20,9 @@ import LiveTracking from '../components/LiveTracking';
 const Home = () => {
 
   const [pickup, setPickup] = useState('')
+  const [pickupId, setPickupId] = useState('')
   const [destination, setDestination] = useState('')
+  const [destinationId, setDestinationId] = useState('')
   const [panelOpen, setPanelOpen] = useState(false)
   const [vehiclePanel, setVehiclePanel] = useState(false)
   const [confirmRidePanel, setConfirmRidePanel] = useState(false)
@@ -68,15 +70,16 @@ const Home = () => {
     setPickup(e.target.value)
     try {
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
-        params: { input: e.target.value },
+        params: { q: e.target.value },
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
+        
       })
-      console.log(response.data);
+      console.log("suggestions:" , response.data)
       setPickupSuggestions(response.data)
-    } catch(err) {
-      console.error("Error fetching suggestions:", err);
+    } catch {
+      // handle error
     }
   }
 
@@ -84,7 +87,7 @@ const Home = () => {
     setDestination(e.target.value)
     try {
       const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
-        params: { input: e.target.value },
+        params: { q: e.target.value },
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -94,7 +97,6 @@ const Home = () => {
       //handle error
     }
   }
-
   const submitHandler = (e) => {
     e.preventDefault()
   }
@@ -281,7 +283,9 @@ const Home = () => {
             setVehiclePanel={setVehiclePanel}
             findTrip={findTrip}
             setPickup={setPickup}
+            setPickupId={setPickupId}
             setDestination={setDestination}
+            setDestinationId={setDestinationId}
             activeField={activeField}
           />
 
