@@ -31,45 +31,58 @@ module.exports.getDistanceTime = async (origin, destination) => {
 
     const apiKey = process.env.GOOGLE_MAPS_API;
 
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
-
+   const urlOrigin = `https://api.mapbox.com/search/searchbox/v1/retrieve/${origin}?session_token=my-session-1&access_token=${apiKey}`;
+    const urlDestination = `https://api.mapbox.com/search/searchbox/v1/retrieve/${destination}?session_token=my-session-1&access_token=${apiKey}`;
     try {
-        const response = await axios.get(url);
-        if (response.data.status === 'OK') {
+        const resOrigin = await axios.get(urlOrigin);
+        const resDestination = await axios.get(urlDestination);
+        // ORIGIN
+        const { latitude: lat1, longitude: lon1 } =
+            resOrigin.data.features[0].properties.coordinates;
 
-            if (response.data.rows[0].elements[0].status === 'ZERO_RESULTS') {
-                throw new Error('No result found')
-            }
+        // DESTINATION
+        const { latitude: lat2, longitude: lon2 } =
+            resDestination.data.features[0].properties.coordinates;
 
-            return response.data.rows[0].elements[0];
-        } else {
-            throw new Error('Unable to fetch distance and time');
-        }
+        console.log("origin", lon1, lat1);
+        console.log("destination", lon2, lat2);
+        const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${lon1},${lat1};${lon2},${lat2}?geometries=geojson&access_token=${apiKey}`;
+
+        const res = await axios.get(url);
+        const distance = res.data.routes[0].distance; // in meters
+        const duration = res.data.routes[0].duration; // in seconds
+
+        console.log("Driving distance (km):", distance);
+        console.log("Driving time (min):", duration);
+
+        return {distance: { value: distance }, duration: { value: duration } };
+
     } catch (err) {
-        console.error(err);
+        console.error(err.response);
         throw err;
     }
 }
 
-module.exports.getSuggestion = async (input) => {
-    if (!input) {
+
+module.exports.getSuggestion = async (q) => {
+    if (!q) {
         throw new Error('query is required')
     }
 
     const apiKey = process.env.GOOGLE_MAPS_API;
 
-    const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
+    // const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
+    const url = `https://api.mapbox.com/search/searchbox/v1/suggest?q=${encodeURIComponent(q)}&session_token=my-session-1&access_token=${apiKey}`
+
 
     try {
         const response = await axios.get(url);
-        if (response.data.status === 'OK') {
-            return response.data.predictions;
-        } else {
-            throw new Error('Unable to fetch suggestions');
-        }
+
+        return response.data.suggestions;
+
     } catch (err) {
         console.error(err);
-        throw err
+        throw new Error(err.message);
     }
 }
 
